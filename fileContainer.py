@@ -1,12 +1,12 @@
-import fileIOModule
+from fileIOModule import fileIOModule
 from datetime import datetime
 
 class fileContainer():
-    def fileIOStart(self):
+    def fileIOStart(self, day):
         now = datetime.now()
-        self.serialFile= fileIOModule.fileIOModule('serial{}-{}-{}.txt'.format(now.year, now.month, now.day), '{}-{}-{}.txt'.format(now.year, now.month, now.day))
-        self.baseFile= fileIOModule.fileIOModule('base{}-{}-{}.txt'.format(now.year, now.month, now.day), '{}-{}-{}.txt'.format(now.year, now.month, now.day))
-        self.averFile= fileIOModule.fileIOModule('aver{}-{}-{}.txt'.format(now.year, now.month, now.day), '{}-{}-{}.txt'.format(now.year, now.month, now.day))
+        self.serialFile= fileIOModule('serial{}.txt'.format(day), '{}.txt'.format(day))
+        self.averFile= fileIOModule('aver{}.txt'.format(day), '{}.txt'.format(day))
+        self.baseFile= fileIOModule('base{}.txt'.format(day), '{}.txt'.format(day))
 
     def serialWrite(self, serial):
         self.serialFile.fileWrite(serial)
@@ -16,3 +16,5 @@ class fileContainer():
 
     def baseWrite(self, base):
         self.baseFile.fileWrite(base)
+
+container= fileContainer()

@@ -1,5 +1,4 @@
 import serial
-import fileIOModule
 from seiralParser import *
 
 try:

@@ -1,7 +1,11 @@
 #import SerialModual
 import re
-import fileContainer
+from fileContainer import container
 from serialParser import *
+from datetime import datetime
+import schedule
+from serialAverager import serialAverager
+import time
 
 def main():
    # business logic...
@@ -20,15 +24,23 @@ def main():
             if port != '':
                 print('serial connecting...{} port'.format(port))
                 break
+    now = datetime.now()
+    container.fileIOStart("{}-{}-{}".format(now.year, now.month, now.day))
+    serialAverager.average()
     
-    fileContainer.fileContainer.fileIOStart()
+    schedule.every().day.at("00:00").do(fileRefresh)
+    schedule.every().minute.at(":00").do(averaging)
+
     print(serialParse("@@T:+0201205,H:041291A,PM25:0037:,PM10:00505"))
-    
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
+def fileRefresh():
+    container.fileIOStart("{}-{}-{}".format(now.year, now.month, now.day))
 
-    
-
-       
+def averaging():
+    serialAverager.average()
 
 if __name__ == "__main__":
     main()

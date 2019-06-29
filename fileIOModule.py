@@ -1,9 +1,12 @@
+import os
+
 class fileIOModule():
     def __init__(self, filename, date):
         self.filename= filename
         self.date= date
-        with open(filename, "w") as f:
-            f.write("{} starting program".format(date))
+        with open(os.path.abspath("./")+"/"+filename, "w") as f:
+            print(os.path.abspath("./")+"/"+filename)
+            f.write("{} starting program\n\n".format(date))
     
     def fileWrite(self, str):
         with open(self.filename, "a") as f:
